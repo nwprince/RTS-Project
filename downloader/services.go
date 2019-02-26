@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"path/filepath"
 	"strings"
 )
 
@@ -80,12 +81,16 @@ func getJSON(url string, target interface{}) error {
 	}
 	defer r.Body.Close()
 	return json.NewDecoder(r.Body).Decode(target)
-
 }
 
-func Init() {
+func Init() Media {
 	fmt.Println("Initializing...")
 	var media = new(Media)
+
+	if len(os.Args) < 2 {
+		fmt.Println("Please use proper params")
+		return Media{}
+	}
 
 	if shouldDownload() == true {
 		fmt.Println("Downloader: Will download new media")
@@ -96,8 +101,23 @@ func Init() {
 		fmt.Println("Downloader: Finished downloading " + media.Title)
 	} else {
 		media.Prepared = true
-		media.MediaType = os.Args[1]
-		media.Title = os.Args[2]
+		media.Title = os.Args[1]
 	}
-	fmt.Println(media)
+
+	err := filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
+		if info.IsDir() {
+			return nil
+		}
+		if filepath.Ext(path) == ".mkv" || filepath.Ext(path) == ".mp4" {
+			media.Container = filepath.Ext(path)
+			media.Title = strings.TrimSuffix(info.Name(), filepath.Ext(path))
+			media.FileName = info.Name()
+		}
+		return nil
+	})
+	if err != nil {
+		fmt.Printf("walk error [%v]\n", err)
+	}
+
+	return *media
 }

@@ -6,4 +6,5 @@ type Media struct {
 	Title     string `json:"title"`
 	Container string `json:"container"`
 	ID        string `json:"id"`
+	FileName  string `json:"fileName"`
 }
