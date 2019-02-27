@@ -37,7 +37,7 @@ func ping(w http.ResponseWriter, r *http.Request) {
 func Init() {
 	fmt.Println("Web: Starting web service")
 
-	fs := http.FileServer(http.Dir("./web/public"))
+	fs := http.FileServer(http.Dir("./web/public/build"))
 	http.Handle("/", fs)
 	http.HandleFunc("/init", startConnection)
 	http.HandleFunc("/ping", ping)
