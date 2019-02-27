@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-var baseURL = "http://localhost:8096/emby/"
+var baseURL = "http://131.151.163.211:8096/emby/"
 var userID = "a6721c39bc1d4d8fb356cac7d45f8db5"
 var apiKey = "b2d4af7255f94a7ca73fd85a84ebbd3a"
 
@@ -58,6 +58,7 @@ func getContainer(media *Media) {
 
 func downloadItem(media *Media) {
 	url := buildURI("Items/"+media.ID+"/File", false, true, "")
+	fmt.Println(url)
 	resp, err := http.Get(url)
 	if err != nil {
 		panic(err)
