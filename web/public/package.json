@@ -51,6 +51,7 @@
     "typings-for-css-modules-loader": "^1.7.0"
   },
   "dependencies": {
+    "@types/node": "^11.9.6",
     "preact": "^8.3.1",
     "preact-compat": "^3.18.4",
     "preact-router": "^2.6.1"
