@@ -1,0 +1,16 @@
+.poster {
+    position: absolute;
+}
+
+.mobile {
+    position: absolute;
+    top: 16%;
+    left: 8%;
+}
+
+.desktop {
+    position: absolute;
+    padding-top: 300;
+    left: 0;
+    bottom: 0;
+}
