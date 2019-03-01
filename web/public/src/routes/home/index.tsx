@@ -15,6 +15,7 @@ export default class Home extends Component {
             source = "https://image.tmdb.org/t/p/original/aUVCJ0HkcJIBrTJYPnTXta8h9Co.jpg";
         }
 
+
         return (
             <div class={style.home}>
                 <Backdrop src={source} />

@@ -1,9 +1,10 @@
 .mobile {
     position: absolute;
-    top: 16%;
-    left: 8%;
-    box-shadow: 1px 1px 1px 1px black;
-    border-radius: 8px;
+    margin: 0 auto;
+    top: 45%;
+    left: 2vh;
+    width: 16vh;
+    border-radius: 4px;
 }
 
 .desktop {
