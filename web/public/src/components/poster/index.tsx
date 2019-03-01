@@ -9,8 +9,8 @@ export default class Poster extends Component {
         let className: string;
 
         if (Constants.isMobile) {
-            posterWidth = 0.4 * window.innerWidth;
-            posterHeight = 0.6 * window.innerWidth;
+            posterWidth = window.innerWidth;
+            posterHeight = window.innerWidth;
             className = style.mobile;
         } else {
             posterWidth = 0.4 * window.innerWidth;
