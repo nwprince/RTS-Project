@@ -1,0 +1,25 @@
+.infobar {
+    position: absolute;
+}
+
+@media screen and (min-width: 501px) {
+    .infobar {
+        top: 16vh;
+        left: 53vh;
+        right: 2vh;
+        bottom: 8vh;
+        background-color: #2d2d2a;
+        padding: 1.6em;
+        width: auto;
+        height: 76.5vh;
+        border-radius: 0px 24px 24px 0px;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .infobar {
+        top: 40%;
+        left: 45%;
+        right: 5%;
+    }
+}
