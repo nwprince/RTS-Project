@@ -1,24 +1,21 @@
 .poster {
-    position: absolute;
-    margin: 0 auto;
+  margin: 0 auto;
+  float: left;
 }
 
 @media screen and (min-width: 501px) {
-    .poster {
-        top: 16vh;
-        left: 2vh;
-        bottom: 8vh;
-        width: 51vh;
-        height: 76.5vh;
-        border-radius: 24px 0px 0px 24px;
-    }
+  .poster {
+    width: 51vh;
+    height: 76.5vh;
+    border-radius: 24px 0px 0px 24px;
+  }
 }
 
 @media screen and (max-width: 500px) {
-    .poster {
-        top: 40%;
-        left: 2vh;
-        width: 36vw;
-        border-radius: 4px;
-    }
+  .poster {
+    top: 40%;
+    width: 36vw;
+    height: 54vw;
+    border-radius: 4px;
+  }
 }

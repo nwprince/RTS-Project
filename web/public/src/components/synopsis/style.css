@@ -1,0 +1,10 @@
+.synopsis {
+  font-size: 1.2em;
+  color: #e2e2e2;
+}
+
+@media screen and (max-width: 500px) {
+  .synopsis {
+    font-size: 1em;
+  }
+}
