@@ -1,13 +1,13 @@
 .item {
-    color: red;
-    font-size: 0.9rem;
-    font-weight: 600;
-    word-spacing: 18px;
+  color: red;
+  font-size: 0.9rem;
+  font-weight: 600;
+  word-spacing: 18px;
 }
 
 @media screen and (max-width: 500px) {
-    .item {
-        text-align: right;
-        word-spacing: 0;
-    }
+  .item {
+    text-align: center;
+    word-spacing: 0;
+  }
 }

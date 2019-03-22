@@ -10,8 +10,8 @@
 
 @media screen and (max-width: 500px) {
   .title {
-    font-size: 1.8rem;
     text-align: center;
+    font-size: 1.8rem;
     word-spacing: 2px;
   }
 }
