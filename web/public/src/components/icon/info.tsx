@@ -3,8 +3,8 @@ import { h } from "preact";
 const Info = ({
   style = {},
   fill = "#fff",
-  width = "5vw",
-  height = "5vh",
+  width = "4vw",
+  height = "4vh",
   viewBox = "0 0 512 512"
 }) => {
   return (
