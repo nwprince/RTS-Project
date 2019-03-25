@@ -1,9 +1,11 @@
 package downloader
 
 import (
+	"cli"
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -84,21 +86,20 @@ func getJSON(url string, target interface{}) error {
 }
 
 func Init() Media {
-	fmt.Println("Initializing...")
 	var media = new(Media)
 
 	if len(os.Args) < 2 {
-		fmt.Println("Please use proper params")
+		cli.Error("downloader", "Please use proper params")
 		return Media{}
 	}
 
 	if shouldDownload() == true {
-		fmt.Println("Downloader: Will download new media")
+		cli.PostStatus("downloader", "Will download new media")
 		media.Prepared = false
 		media.MediaType = os.Args[2]
 		media.Title = os.Args[3]
 		initDownload(media)
-		fmt.Println("Downloader: Finished downloading " + media.Title)
+		fmt.Println("downloader", "Finished downloading "+media.Title)
 	} else {
 		media.Prepared = true
 		media.Title = os.Args[1]
@@ -116,7 +117,7 @@ func Init() Media {
 		return nil
 	})
 	if err != nil {
-		fmt.Printf("walk error [%v]\n", err)
+		log.Panic("walk error [%v]\n", err)
 	}
 
 	return *media

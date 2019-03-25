@@ -1,6 +1,7 @@
 package web
 
 import (
+	"cli"
 	"fmt"
 	"net/http"
 	"strings"
@@ -34,8 +35,10 @@ func ping(w http.ResponseWriter, r *http.Request) {
 	fmt.Println("Ping")
 	enableCors(&w)
 }
+
+// Init will start the web service
 func Init() {
-	fmt.Println("Web: Starting web service")
+	cli.PostStatus("web", "Initializing web service...")
 
 	fs := http.FileServer(http.Dir("./web/public/build"))
 	http.Handle("/", fs)

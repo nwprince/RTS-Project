@@ -1,13 +1,13 @@
 package main
 
 import (
+	"cli"
 	"downloader"
-	"fmt"
 	"web"
 )
 
 func main() {
-	media := downloader.Init()
-	fmt.Println(media)
+	cli.PostStatus("app", "Initializing...")
+	/* media :=*/ downloader.Init()
 	web.Init()
 }
