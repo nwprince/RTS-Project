@@ -24,18 +24,14 @@ func getColor(src string) string {
 
 	switch src {
 	case "app":
-		c := color.New(color.FgWhite, color.BgGreen, color.OpBold).Render
-		return c("AppName")
+		return color.New(color.FgWhite, color.BgGreen, color.OpBold).Render("AppName")
 	case "downloader":
-		c := color.New(color.FgWhite, color.BgYellow, color.OpBold).Render
-		return c("Downloader")
+		return color.New(color.FgWhite, color.BgYellow, color.OpBold).Render("Downloader")
 	case "error":
-		c := color.New(color.FgWhite, color.BgRed, color.OpBold).Render
-		return c("ERROR")
+		return color.New(color.FgWhite, color.BgRed, color.OpBold).Render("ERROR")
 
 	case "web":
-		c := color.New(color.FgWhite, color.BgMagenta, color.OpBold).Render
-		return c("Web")
+		return color.New(color.FgWhite, color.BgMagenta, color.OpBold).Render("Web")
 	}
 
 	return ""

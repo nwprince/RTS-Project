@@ -27,11 +27,16 @@ func buildURI(endpoint string, requireUser bool, requireKey bool, query string) 
 	if requireUser == true {
 		url = strings.Replace(url, "*", userID, 1)
 	}
-	url = url + "?"
+	if requireKey == true || query != "" {
+		url = url + "?"
+	}
+
 	if requireKey == true {
 		url = url + "api_key=" + apiKey + "&"
 	}
-	url = url + query
+	if query != "" {
+		url = url + query
+	}
 	return url
 }
 
@@ -85,10 +90,17 @@ func getJSON(url string, target interface{}) error {
 	return json.NewDecoder(r.Body).Decode(target)
 }
 
+func checkArgs() bool {
+	if len(os.Args) < 3 {
+		return false
+	}
+	return true
+}
+
 func Init() Media {
 	var media = new(Media)
 
-	if len(os.Args) < 2 {
+	if checkArgs() == false {
 		cli.Error("downloader", "Please use proper params")
 		return Media{}
 	}
@@ -117,7 +129,7 @@ func Init() Media {
 		return nil
 	})
 	if err != nil {
-		log.Panic("walk error [%v]\n", err)
+		log.Panicf("walk error [%v]\n", err)
 	}
 
 	return *media
