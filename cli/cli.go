@@ -32,6 +32,9 @@ func getColor(src string) string {
 
 	case "web":
 		return color.New(color.FgWhite, color.BgMagenta, color.OpBold).Render("Web")
+
+	case "worker":
+		return color.New(color.FgWhite, color.BgCyan, color.OpBold).Render("Worker")
 	}
 
 	return ""

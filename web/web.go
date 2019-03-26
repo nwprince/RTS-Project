@@ -3,6 +3,8 @@ package web
 import (
 	"cli"
 	"fmt"
+	"log"
+	"net"
 	"net/http"
 	"strings"
 	"time"
@@ -36,15 +38,30 @@ func ping(w http.ResponseWriter, r *http.Request) {
 	enableCors(&w)
 }
 
+func getHostIP() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		log.Panic(err)
+	}
+	defer conn.Close()
+	localAddr := conn.LocalAddr().String()
+	idx := strings.LastIndex(localAddr, ":")
+	return localAddr[0:idx]
+}
+
 // Init will start the web service
 func Init() {
 	cli.PostStatus("web", "Initializing web service...")
+
+	port := ":8080"
 
 	fs := http.FileServer(http.Dir("./web/public/build"))
 	http.Handle("/", fs)
 	http.HandleFunc("/init", startConnection)
 	http.HandleFunc("/ping", ping)
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	ip := getHostIP()
+	cli.PostStatus("web", "You can now connect to the service at http://"+ip+port)
+	if err := http.ListenAndServe(port, nil); err != nil {
 		panic(err)
 	}
 }

@@ -22,4 +22,8 @@ func TestColor(t *testing.T) {
 	if getColor("web") != color.New(color.FgWhite, color.BgMagenta, color.OpBold).Render("Web") {
 		t.Error("Expected Web with a magenta bg")
 	}
+
+	if getColor("worker") != color.New(color.FgWhite, color.BgCyan, color.OpBold).Render("Worker") {
+		t.Error("Expected Worker with a cyan bg")
+	}
 }

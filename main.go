@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	cli.PostStatus("app", "Initializing...")
+	go cli.PostStatus("app", "Initializing...")
 	/* media :=*/ downloader.Init()
 	web.Init()
 }

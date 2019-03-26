@@ -1,6 +1,7 @@
 package web
 
 import (
+	"cli"
 	"log"
 	"time"
 )
@@ -16,6 +17,7 @@ type Worker struct {
 
 // NewWorker creates a new worker and instantiates all the data structures required.
 func NewWorker(interval time.Duration) *Worker {
+	cli.PostStatus("worker", "New worker created")
 	return &Worker{
 		Stopped:         false,
 		ShutdownChannel: make(chan string),
@@ -26,8 +28,7 @@ func NewWorker(interval time.Duration) *Worker {
 
 // Run starts the worker and listens for a shutdown call.
 func (w *Worker) Run() {
-
-	log.Println("Worker Started")
+	cli.PostStatus("worker", "Started worker")
 
 	// Loop that runs forever
 	for {
