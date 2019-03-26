@@ -18,7 +18,9 @@ export default class App extends Component {
   };
 
   public componentDidMount() {
-    NetworkHandler.Init();
+    NetworkHandler.Init().then(id => {
+      console.log(id);
+    });
   }
 
   public render() {
