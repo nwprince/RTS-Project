@@ -26,10 +26,23 @@
   width: 100%;
 }
 
-.image {
-  height: 80;
-  width: 80;
-  background-color: aquamarine;
+.outer {
+  width: 100%;
+  height: 100%;
+  margin: 0 auto;
+  overflow: visible;
+}
+
+.inner {
+  position: relative;
+  float: right;
+  right: 50%;
+}
+
+.inner img {
+  position: relative;
+  height: 60vh;
+  right: -50%;
 }
 
 @media screen and (max-width: 500px) {

@@ -1,8 +1,8 @@
 .item {
   color: red;
-  font-size: 0.9rem;
+  font-size: 1.75vh;
   font-weight: 600;
-  word-spacing: 18px;
+  word-spacing: 2vw;
 }
 
 @media screen and (max-width: 500px) {

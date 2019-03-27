@@ -1,4 +1,5 @@
 import { Component, h } from "preact";
+import { tmdbResp } from "../../models/interfaces";
 import Actionbar from "../actionbar";
 import GenreBar from "../genrebar";
 import Poster from "../poster";
@@ -6,23 +7,33 @@ import Synopsis from "../synopsis";
 import Title from "../title";
 import * as style from "./style.css";
 
-export default class InfoCard extends Component {
+interface IInfoCardProps {
+  media: tmdbResp;
+}
+
+export default class InfoCard extends Component<IInfoCardProps, {}> {
   public render() {
+    const genres: string[] = [];
+
+    this.props.media.genres.forEach(element => {
+      genres.push(element.name);
+    });
+
     return (
       <div class={style.infoCardContainer}>
         <div class="display: flex">
-          <Poster />
+          <Poster src={this.props.media.poster_path} />
           <div class={style.infoCardInfo}>
-            <Title title="Spiderman: Into the Spiderverse" />
-            <GenreBar genres={["Animation", "Action", "Comedy"]} />
+            <Title title={this.props.media.title} />
+            <GenreBar genres={genres.slice(0, 3)} />
             <div class={style.desktop}>
-              <Synopsis synopsis="Miles Morales is juggling his life between being a high school student and being a spider-man. When Wilson Kingpin Fisk uses a super collider, others from across the Spider-Verse are transported to this dimension." />
+              <Synopsis synopsis={this.props.media.overview} />
               <Actionbar />
             </div>
           </div>
         </div>
         <div class={style.mobile}>
-          <Synopsis synopsis="Miles Morales is juggling his life between being a high school student and being a spider-man. When Wilson Kingpin Fisk uses a super collider, others from across the Spider-Verse are transported to this dimension." />
+          <Synopsis synopsis={this.props.media.overview} />
           <Actionbar />
         </div>
       </div>

@@ -7,6 +7,6 @@ interface ISynopsisProps {
 
 export default class Synopsis extends Component<ISynopsisProps, {}> {
   public render() {
-    return <p class={style.synopsis}>{this.props.synopsis}</p>;
+    return <div class={style.synopsis}>{this.props.synopsis}</div>;
   }
 }

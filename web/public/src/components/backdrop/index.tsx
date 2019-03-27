@@ -9,12 +9,14 @@ export default class Backdrop extends Component<IBackdrop, {}> {
   public render() {
     if (window.innerWidth <= 500) {
       return (
-        <div>
-          <img
-            width={window.innerWidth}
-            height={window.innerHeight}
-            src={this.props.src}
-          />
+        <div class={style.outer}>
+          <div class={style.inner}>
+            <img
+              // width={window.innerWidth}
+              // height={window.innerHeight}
+              src={this.props.src}
+            />
+          </div>
           <div class={style.gradient} />
         </div>
       );
