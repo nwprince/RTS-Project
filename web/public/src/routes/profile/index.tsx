@@ -36,7 +36,7 @@ export default class Profile extends Component<IProfileProps, State> {
   public increment = () => {
     this.setState({ count: this.state.count + 1 });
   };
-  public render({ user }: IProps, { time, count }: State) {
+  public render({ user }: IProfileProps, { time, count }: State) {
     return (
       <div class={style.profile}>
         <h1>Profile: {user}</h1>
