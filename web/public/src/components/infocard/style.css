@@ -1,25 +1,41 @@
-.infobar {
-    position: absolute;
+.infoCardContainer {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.infoCardInfo {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
 }
 
 @media screen and (min-width: 501px) {
-    .infobar {
-        top: 16vh;
-        left: 53vh;
-        right: 2vh;
-        bottom: 8vh;
-        background-color: #2d2d2a;
-        padding: 1.6em;
-        width: auto;
-        height: 76.5vh;
-        border-radius: 0px 24px 24px 0px;
-    }
+  .infoCardContainer {
+    top: 16vh;
+    left: 2vh;
+    right: 2vh;
+    bottom: 8vh;
+    background-color: #2d2d2a;
+    /* padding: 1.6em; */
+    width: auto;
+    height: 76.5vh;
+    border-radius: 24px;
+  }
+
+  .mobile {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 500px) {
-    .infobar {
-        top: 40%;
-        left: 45%;
-        right: 5%;
-    }
+  .infoCardContainer {
+    top: 40%;
+    left: 5%;
+    right: 5%;
+    bottom: 0%;
+  }
+  .desktop {
+    display: none;
+  }
 }

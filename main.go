@@ -1,13 +1,16 @@
 package main
 
 import (
+	"cli"
 	"downloader"
-	"fmt"
+	"p2phost"
 	"web"
 )
 
 func main() {
-	media := downloader.Init()
-	fmt.Println(media)
-	web.Init()
+	go cli.PostStatus("app", "Initializing...")
+	/* media :=*/ downloader.Init()
+	go web.Init()
+	p2phost.InitP2P()
+
 }

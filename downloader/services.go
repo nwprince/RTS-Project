@@ -1,9 +1,11 @@
 package downloader
 
 import (
+	"cli"
 	"encoding/json"
 	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -25,11 +27,16 @@ func buildURI(endpoint string, requireUser bool, requireKey bool, query string) 
 	if requireUser == true {
 		url = strings.Replace(url, "*", userID, 1)
 	}
-	url = url + "?"
+	if requireKey == true || query != "" {
+		url = url + "?"
+	}
+
 	if requireKey == true {
 		url = url + "api_key=" + apiKey + "&"
 	}
-	url = url + query
+	if query != "" {
+		url = url + query
+	}
 	return url
 }
 
@@ -83,22 +90,28 @@ func getJSON(url string, target interface{}) error {
 	return json.NewDecoder(r.Body).Decode(target)
 }
 
+func checkArgs() bool {
+	if len(os.Args) < 3 {
+		return false
+	}
+	return true
+}
+
 func Init() Media {
-	fmt.Println("Initializing...")
 	var media = new(Media)
 
-	if len(os.Args) < 2 {
-		fmt.Println("Please use proper params")
+	if checkArgs() == false {
+		cli.Error("downloader", "Please use proper params")
 		return Media{}
 	}
 
 	if shouldDownload() == true {
-		fmt.Println("Downloader: Will download new media")
+		cli.PostStatus("downloader", "Will download new media")
 		media.Prepared = false
 		media.MediaType = os.Args[2]
 		media.Title = os.Args[3]
 		initDownload(media)
-		fmt.Println("Downloader: Finished downloading " + media.Title)
+		fmt.Println("downloader", "Finished downloading "+media.Title)
 	} else {
 		media.Prepared = true
 		media.Title = os.Args[1]
@@ -116,7 +129,7 @@ func Init() Media {
 		return nil
 	})
 	if err != nil {
-		fmt.Printf("walk error [%v]\n", err)
+		log.Panicf("walk error [%v]\n", err)
 	}
 
 	return *media
