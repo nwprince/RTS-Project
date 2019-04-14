@@ -1,11 +1,13 @@
 package web
 
 import (
-	"cli"
 	"encoding/json"
 	"log"
 	"net/http"
-	"p2phost"
+
+	"github.com/nwprince/media/cli"
+
+	"github.com/nwprince/media/p2phost"
 )
 
 // func enableCors(w *http.ResponseWriter) {
@@ -28,8 +30,8 @@ func handshake(w http.ResponseWriter, r *http.Request) {
 func Init() {
 	cli.PostStatus("web", "Initializing web service...")
 
-	port := ":8080"
-	fs := http.FileServer(http.Dir("./web/public/build"))
+	port := ":41000"
+	fs := http.FileServer(http.Dir("./web/public/dist"))
 	http.Handle("/", fs)
 	http.HandleFunc("/handshake", handshake)
 	cli.PostStatus("web", "You can now connect to the service")

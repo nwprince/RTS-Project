@@ -1,16 +1,10 @@
 package main
 
-import (
-	"cli"
-	"downloader"
-	"p2phost"
-	"web"
-)
+import "github.com/nwprince/media/web"
 
 func main() {
-	go cli.PostStatus("app", "Initializing...")
-	/* media :=*/ downloader.Init()
-	go web.Init()
-	p2phost.InitP2P()
-
+	// // go cli.PostStatus("app", "Initializing...")
+	// // // /* media :=*/ downloader.Init()
+	web.Init()
+	// p2phost.InitP2P()
 }

@@ -15,3 +15,4 @@ golang.org/*
 *.mkv
 web/public/package-lock.json
 .vscode
+/web/*.zip
