@@ -1,9 +1,10 @@
 package web
 
 import (
-	"cli"
 	"log"
 	"time"
+
+	"github.com/nwprince/RTS-Project/cli"
 )
 
 // Worker will do its Action once every interval, making up for lost time that

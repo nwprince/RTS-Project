@@ -1,7 +1,6 @@
 package downloader
 
 import (
-	"cli"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -10,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/nwprince/RTS-Project/cli"
 )
 
 var baseURL = "http://r06nwpkbd.device.mst.edu:8096/emby/"

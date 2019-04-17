@@ -2,12 +2,13 @@ package p2phost
 
 import (
 	"bufio"
-	"cli"
 	"context"
 	"crypto/rand"
 	"fmt"
 	"log"
 	"os"
+
+	"github.com/nwprince/RTS-Project/cli"
 
 	host "github.com/libp2p/go-libp2p-host"
 

@@ -1,11 +1,12 @@
 package web
 
 import (
-	"cli"
 	"encoding/json"
 	"log"
 	"net/http"
-	"p2phost"
+
+	"github.com/nwprince/RTS-Project/cli"
+	"github.com/nwprince/RTS-Project/p2phost"
 )
 
 // func enableCors(w *http.ResponseWriter) {
@@ -31,7 +32,7 @@ func Init() {
 	port := ":8080"
 	fs := http.FileServer(http.Dir("./web/public/build"))
 	http.Handle("/", fs)
-	http.HandleFunc("/handshake", handshake)
+	// http.HandlleFunc("/handshake", handshake)
 	cli.PostStatus("web", "You can now connect to the service")
 	if err := http.ListenAndServe(port, nil); err != nil {
 		panic(err)

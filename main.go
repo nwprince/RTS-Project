@@ -1,10 +1,10 @@
 package main
 
 import (
-	"cli"
-	"downloader"
-	"p2phost"
-	"web"
+	"github.com/nwprince/RTS-Project/cli"
+	"github.com/nwprince/RTS-Project/downloader"
+	"github.com/nwprince/RTS-Project/p2phost"
+	"github.com/nwprince/RTS-Project/web"
 )
 
 func main() {
