@@ -1,3 +1,4 @@
 [submodule "web/public"]
 	path = web/public
 	url = ../RTS-Frontend
+	ignore = all
