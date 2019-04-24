@@ -1,12 +1,9 @@
 package web
 
 import (
-	"encoding/json"
-	"log"
 	"net/http"
 
 	"github.com/nwprince/RTS-Project/cli"
-	"github.com/nwprince/RTS-Project/p2phost"
 )
 
 // func enableCors(w *http.ResponseWriter) {
@@ -14,15 +11,15 @@ import (
 // }
 
 func handshake(w http.ResponseWriter, r *http.Request) {
-	id := p2phost.Host.ID().Pretty()
-	if id != "" {
-		jData, err := json.Marshal(id)
-		if err != nil {
-			log.Panic(err)
-		}
-		w.Header().Set("Content-Type", "application/json")
-		w.Write([]byte(jData))
-	}
+	// id := p2phost.Host.ID().Pretty()
+	// if id != "" {
+	// 	jData, err := json.Marshal(id)
+	// 	if err != nil {
+	// 		log.Panic(err)
+	// 	}
+	// 	w.Header().Set("Content-Type", "application/json")
+	// 	w.Write([]byte(jData))
+	// }
 }
 
 // Init will start the web service
