@@ -3,7 +3,7 @@ package cli
 import (
 	"fmt"
 
-	"github.com/gookit/color"
+	"gopkg.in/gookit/color.v1"
 )
 
 // PostStatus will show which package is generating a msg and that message
