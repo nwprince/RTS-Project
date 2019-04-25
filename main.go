@@ -6,6 +6,6 @@ import (
 )
 
 func main() {
-	go cli.PostStatus("app", "Initializing...")
+	cli.PostStatus("app", "Initializing...")
 	web.Init()
 }
