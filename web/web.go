@@ -44,6 +44,7 @@ func addMedia() {
 		}
 		if filepath.Ext(path) == ".m3u8" {
 			shouldConvert = false
+			mediaExists = true
 		}
 		return nil
 	})
@@ -54,8 +55,8 @@ func addMedia() {
 
 	if !mediaExists {
 		cli.PostStatus("error", "Ensure file is in this directory")
-	}
-	if shouldConvert {
+		os.Exit(1)
+	} else if shouldConvert {
 		dir, _ := os.Getwd()
 		fullpath := dir + "/" + filename
 		outputDir = dir + "/" + strings.Split(filename, ".")[0] + "/master.m3u8"
