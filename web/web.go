@@ -1,7 +1,7 @@
 package web
 
 import (
-	"encoding/json"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
@@ -9,22 +9,23 @@ import (
 	"path/filepath"
 	"strings"
 
-	shell "github.com/ipfs/go-ipfs-api"
-
+	echo "github.com/labstack/echo/v4"
+	middleware "github.com/labstack/echo/v4/middleware"
 	"github.com/nwprince/RTS-Project/cli"
+	"github.com/nwprince/RTS-Project/ipfs"
 )
 
-var sh *shell.Shell
-var cid string = ""
+var cid string
 
 func enableCors(w *http.ResponseWriter) {
 	(*w).Header().Set("Access-Control-Allow-Origin", "*")
 }
 
-func addMedia() {
-	var mediaExists bool = false
-	var shouldConvert bool = true
+func mediaInit() {
+	var mediaExists = false
+	var shouldConvert = true
 	var filename string
+	var name string
 	var outputDir string
 	err := filepath.Walk("./", func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() {
@@ -32,7 +33,7 @@ func addMedia() {
 		}
 		if filepath.Ext(path) == ".mkv" || filepath.Ext(path) == ".mp4" {
 			filename = info.Name()
-			name := strings.Split(info.Name(), ".")[0]
+			name = strings.Split(info.Name(), ".")[0]
 			outputDir = "./" + name
 			if _, err := os.Stat(outputDir); os.IsNotExist(err) {
 				os.Mkdir(outputDir, 0777)
@@ -66,42 +67,65 @@ func addMedia() {
 			log.Print("error: ", err)
 		}
 	}
+
+	out, errPin := ipfs.CheckForPin(name + "/")
+	if errPin != "" {
+		fmt.Println(err)
+		return
+	}
+
+	if out == "" {
+		var errAdd string
+		cid, errAdd = ipfs.AddDir(name + "/")
+		if errAdd != "" {
+			fmt.Println(errAdd)
+			return
+		}
+
+		_, errPin := ipfs.Pin(cid)
+		if errPin != "" {
+			fmt.Println(errPin)
+			return
+		}
+	}
+
+	cid = out
+	return
 }
 
-func handshake(w http.ResponseWriter, r *http.Request) {
-	enableCors(&w)
+func handshake(c echo.Context) error {
 	jData := &Base{
 		Initialized: false,
 	}
 	if cid != "" {
 		jData.Initialized = true
+		jData.Hash = cid
 	}
-	msg, _ := json.Marshal(jData)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.Write(msg)
+	// msg, _ := json.Marshal(jData)
+	return c.JSON(http.StatusOK, jData)
 }
 
 // Init will start the web service
 func Init() {
 	cli.PostStatus("web", "Initializing web service...")
 
+	r := echo.New()
+	r.Use(middleware.Recover())
+	r.Use(middleware.CORS())
+	r.Use(middleware.GzipWithConfig(middleware.GzipConfig{
+		Level: 5,
+	}))
+	r.Static("/", "/home/nwprince/Projects/Go/media/src/web/public/build/")
+
+	// r.StaticFile("/", "/home/nwprince/Projects/Go/media/src/web/public/build/")
+	r.GET("/handshake", handshake)
+
 	//Configure fileserver for serving frontend
 	port := ":8081"
-	fs := http.FileServer(http.Dir("./web/public/build"))
-	http.Handle("/", fs)
-	http.HandleFunc("/handshake", handshake)
 
-	addMedia()
+	go mediaInit()
 
-	//Configure a ipfs connection
-	go func() {
-		sh = shell.NewShell("localhost:5001")
-		cli.PostStatus("web", "IPFS Shell is initialized")
-	}()
+	go cli.PostStatus("web", "You can now connect to the service at localhost"+port)
 
-	go cli.PostStatus("web", "You can now connect to the service")
-	if err := http.ListenAndServe(port, nil); err != nil {
-		panic(err)
-	}
+	r.Logger.Fatal(r.Start(port))
 }

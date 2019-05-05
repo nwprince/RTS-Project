@@ -1,9 +1,10 @@
 package main
 
 import (
+	"os/exec"
+
 	"github.com/nwprince/RTS-Project/cli"
 	"github.com/nwprince/RTS-Project/web"
-	"os/exec"
 )
 
 func init() {
