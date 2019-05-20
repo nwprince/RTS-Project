@@ -70,7 +70,7 @@ func mediaInit() {
 
 	out, errPin := ipfs.CheckForPin(name + "/")
 	if errPin != "" {
-		fmt.Println(err)
+		fmt.Println(errPin)
 		return
 	}
 
@@ -90,6 +90,7 @@ func mediaInit() {
 	}
 
 	cid = out
+
 	return
 }
 

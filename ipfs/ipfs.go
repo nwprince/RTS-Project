@@ -17,13 +17,13 @@ func Add(file string) (string, string) {
 
 // AddDir will call the ipfs add command with the correct arguments for a directory
 func AddDir(dir string) (cid string, stderr string) {
-	out, err := execCommand(ipfs, "add -w -r "+dir)
+	out, err := execCommand(ipfs, "add -r "+dir)
 	if err != "" {
 		return "", err
 	}
 	arr := strings.Split(out, "\n")
 	arr2 := strings.Split(arr[len(arr)-2], " ")
-	cid = arr[len(arr2)-2]
+	cid = arr2[len(arr2)-2]
 	return cid, err
 }
 
@@ -37,14 +37,14 @@ func CheckForDir(hash string) (string, string) {
 	return execCommand(ipfs, "ls "+hash)
 }
 
-// GetDirName will return the dir name of the hash
-func GetDirName(hash string) (string, string) {
+// CheckForMaster will return the dir name of the hash
+func CheckForMaster(hash string) (bool, string) {
 	out, err := execCommand(ipfs, "ls "+hash)
 	if err != "" {
-		return "", err
+		return false, err
 	}
-	dirName := strings.Split(out, " ")[2]
-	return strings.TrimSpace(dirName), ""
+	masterExists := strings.Contains(out, "master.m3u8")
+	return masterExists, ""
 }
 
 // CheckForPin will check to see if the current movie is pinned and will retrieve the hash
@@ -55,17 +55,17 @@ func CheckForPin(file string) (dirName string, stderr string) {
 	}
 	pins := strings.Split(out, "\n")
 
-	if len(pins) < 1 {
+	if len(pins) <= 1 {
 		return "", err
 	}
 	for _, element := range pins {
 		cid := strings.Split(element, " ")[0]
-		dirName, errDirName := GetDirName(cid)
+		valid, errDirName := CheckForMaster(cid)
 		if errDirName != "" {
-			return dirName, errDirName
+			return "", errDirName
 		}
 
-		if dirName == file {
+		if valid {
 			return cid, ""
 		}
 	}
